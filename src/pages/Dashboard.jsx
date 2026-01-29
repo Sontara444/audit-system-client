@@ -76,7 +76,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="bg-white p-6 rounded-xl border border-secondary-200 shadow-sm">
                     <h3 className="text-lg font-bold text-secondary-900 mb-4">Quick Actions</h3>
                     <div className="grid grid-cols-2 gap-4">
