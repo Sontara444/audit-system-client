@@ -13,7 +13,9 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const userInfo = localStorage.getItem('userInfo');
         if (userInfo) {
-            setUser(JSON.parse(userInfo));
+            const parsedUser = JSON.parse(userInfo);
+            setUser(parsedUser);
+
         }
         setLoading(false);
     }, []);
@@ -83,11 +85,10 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
         localStorage.removeItem('userInfo');
         setUser(null);
-        // Optional: Redirect to login or handle in UI
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+        <AuthContext.Provider value={{ user, token: user?.token, login, register, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );
