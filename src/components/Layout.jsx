@@ -28,7 +28,7 @@ const Layout = () => {
 
     return (
         <div className="flex h-screen bg-secondary-50">
-            <aside className="hidden md:flex flex-col w-64 bg-white border-r border-secondary-200 shadow-sm">
+            <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-secondary-200 shadow-sm">
                 <div className="flex items-center gap-2 p-6 border-b border-secondary-100">
                     <ShieldCheck className="w-8 h-8 text-primary-600" />
                     <span className="text-xl font-bold text-secondary-900 tracking-tight">ReconAudit</span>
@@ -73,7 +73,7 @@ const Layout = () => {
             </aside>
 
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
-                <header className="md:hidden flex items-center justify-between p-4 bg-white border-b border-secondary-200">
+                <header className="lg:hidden flex items-center justify-between p-4 bg-white border-b border-secondary-200">
                     <div className="flex items-center gap-2">
                         <ShieldCheck className="w-6 h-6 text-primary-600" />
                         <span className="font-bold text-secondary-900">ReconAudit</span>
@@ -84,7 +84,7 @@ const Layout = () => {
                 </header>
 
                 {isMobileMenuOpen && (
-                    <div className="md:hidden fixed inset-0 z-50 bg-white pt-16 px-4">
+                    <div className="lg:hidden fixed inset-0 z-50 bg-white pt-16 px-4">
                         <nav className="space-y-2">
                             {navItems.map((item) => (
                                 <Link
