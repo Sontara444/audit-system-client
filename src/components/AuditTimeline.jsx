@@ -65,8 +65,8 @@ const AuditTimeline = () => {
                                             <span className="font-medium text-gray-900">{log.targetType}</span>
                                         </p>
                                         {log.details && (
-                                            <p className="text-xs text-gray-400 mt-1">
-                                                {JSON.stringify(log.details)}
+                                            <p className="text-xs text-gray-400 mt-1 break-words whitespace-pre-wrap">
+                                                {JSON.stringify(log.details, null, 2)}
                                             </p>
                                         )}
                                     </div>
