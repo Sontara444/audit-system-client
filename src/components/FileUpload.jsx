@@ -8,8 +8,10 @@ const FileUpload = ({ onUploadSuccess }) => {
     const [uploadStatus, setUploadStatus] = useState('idle');
     const [message, setMessage] = useState('');
     const fileInputRef = useRef(null);
-    const { token } = useAuth();
+    const { token, user } = useAuth();
     const API_URL = import.meta.env.VITE_API_URL;
+
+    const isViewer = user?.role === 'Viewer';
 
     const handleDragOver = (e) => {
         e.preventDefault();
@@ -24,11 +26,25 @@ const FileUpload = ({ onUploadSuccess }) => {
     const handleDrop = (e) => {
         e.preventDefault();
         setIsDragging(false);
+
+        if (isViewer) {
+            setUploadStatus('error');
+            setMessage('Permission Denied: Viewers cannot upload files.');
+            return;
+        }
+
         const droppedFile = e.dataTransfer.files[0];
         validateAndSetFile(droppedFile);
     };
 
     const handleFileSelect = (e) => {
+        if (isViewer) {
+            e.preventDefault();
+            setUploadStatus('error');
+            setMessage('Permission Denied: Viewers cannot upload files.');
+            return;
+        }
+
         const selectedFile = e.target.files[0];
         validateAndSetFile(selectedFile);
     };
@@ -95,9 +111,17 @@ const FileUpload = ({ onUploadSuccess }) => {
                     ${uploadStatus === 'error' ? 'border-red-400 bg-red-50' : ''}
                 `}
                 onDragOver={handleDragOver}
+                onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
                 onDrop={handleDrop}
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => {
+                    if (isViewer) {
+                        setUploadStatus('error');
+                        setMessage('Permission Denied: Viewers cannot upload files.');
+                    } else {
+                        fileInputRef.current?.click();
+                    }
+                }}
             >
                 <input
                     type="file"
