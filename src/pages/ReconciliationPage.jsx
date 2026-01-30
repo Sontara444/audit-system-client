@@ -7,7 +7,7 @@ import DataTable from '../components/DataTable';
 const ReconciliationPage = () => {
     const { jobId } = useParams();
     const navigate = useNavigate();
-    const { token } = useAuth();
+    const { token, user } = useAuth();
 
     const [stats, setStats] = useState(null);
     const [loadingStats, setLoadingStats] = useState(true);
@@ -111,6 +111,8 @@ const ReconciliationPage = () => {
         }
     };
 
+    const canEdit = user && ['Admin', 'Analyst'].includes(user.role);
+
     const columns = [
         { header: 'Transaction ID', accessor: 'transactionId', render: (row) => row.data?.transactionId || row.data?.TransactionID || row.data?.id || 'N/A' },
         { header: 'Amount', accessor: 'amount', render: (row) => row.data?.amount || row.data?.Amount || 'N/A' },
@@ -127,7 +129,7 @@ const ReconciliationPage = () => {
             )
         },
         { header: 'Details', accessor: 'reconciliationDetails', render: (row) => row.reconciliationDetails || '-' },
-        {
+        ...(canEdit ? [{
             header: 'Actions', accessor: '_id', render: (row) => (
                 <button
                     onClick={() => handleFlagRecord(row._id)}
@@ -137,7 +139,7 @@ const ReconciliationPage = () => {
                     Flag
                 </button>
             )
-        }
+        }] : [])
     ];
 
     const tabs = ['All', 'Matched', 'Unmatched', 'Partial', 'Duplicate'];
@@ -175,16 +177,18 @@ const ReconciliationPage = () => {
                     >
                         <RefreshCw size={20} />
                     </button>
-                    <button
-                        onClick={runReconciliation}
-                        disabled={running || stats.status === 'Processing'}
-                        className={`flex items-center gap-2 px-5 py-2 rounded-lg font-medium text-white transition-all shadow-sm active:transform active:scale-95
-                            ${running ? 'bg-primary-400 cursor-wait' : 'bg-primary-600 hover:bg-primary-700'}
-                        `}
-                    >
-                        <Play size={16} />
-                        {running ? 'Processing...' : 'Run Reconciliation'}
-                    </button>
+                    {canEdit && (
+                        <button
+                            onClick={runReconciliation}
+                            disabled={running || stats.status === 'Processing'}
+                            className={`flex items-center gap-2 px-5 py-2 rounded-lg font-medium text-white transition-all shadow-sm active:transform active:scale-95
+                                ${running ? 'bg-primary-400 cursor-wait' : 'bg-primary-600 hover:bg-primary-700'}
+                            `}
+                        >
+                            <Play size={16} />
+                            {running ? 'Processing...' : 'Run Reconciliation'}
+                        </button>
+                    )}
                 </div>
             </div>
 

@@ -23,8 +23,13 @@ const Layout = () => {
 
     const navItems = [
         { path: '/', label: 'Dashboard', icon: LayoutDashboard },
-        { path: '/upload', label: 'Upload Data', icon: UploadCloud },
-    ];
+        {
+            path: '/upload',
+            label: 'Upload Data',
+            icon: UploadCloud,
+            allowedRoles: ['Admin', 'Analyst']
+        },
+    ].filter(item => !item.allowedRoles || (user && item.allowedRoles.includes(user.role)));
 
     return (
         <div className="flex h-screen bg-secondary-50">

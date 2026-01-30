@@ -18,7 +18,9 @@ function App() {
                     <Route element={<ProtectedRoute />}>
                         <Route element={<Layout />}>
                             <Route path="/" element={<Dashboard />} />
-                            <Route path="/upload" element={<UploadPage />} />
+                            <Route element={<ProtectedRoute allowedRoles={['Admin', 'Analyst']} />}>
+                                <Route path="/upload" element={<UploadPage />} />
+                            </Route>
                             <Route path="/reconcile/:jobId" element={<ReconciliationPage />} />
                         </Route>
                     </Route>
