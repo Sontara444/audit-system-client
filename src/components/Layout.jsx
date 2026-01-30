@@ -31,7 +31,7 @@ const Layout = () => {
             <aside className="hidden lg:flex flex-col w-64 bg-white border-r border-secondary-200 shadow-sm">
                 <div className="flex items-center gap-2 p-6 border-b border-secondary-100">
                     <ShieldCheck className="w-8 h-8 text-primary-600" />
-                    <span className="text-xl font-bold text-secondary-900 tracking-tight">ReconAudit</span>
+                    <span className="text-xl font-bold text-secondary-900 tracking-tight">AuditSystem</span>
                 </div>
 
                 <nav className="flex-1 overflow-y-auto py-6 px-3 space-y-1">
