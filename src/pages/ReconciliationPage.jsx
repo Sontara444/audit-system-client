@@ -92,24 +92,38 @@ const ReconciliationPage = () => {
 
     const runReconciliation = async () => {
         setRunning(true);
+        // Optimistically set status to Processing to trigger polling
+        setStats(prev => ({ ...prev, status: 'Processing' }));
+
         try {
             const response = await fetch(`${API_URL}/recon/${jobId}`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            if (response.ok) {
-                setTimeout(() => {
-                    fetchStats();
-                    fetchRecords();
-                }, 1000);
+            if (!response.ok) {
+                // Revert if failed
+                fetchStats();
             }
         } catch (error) {
             console.error('Error starting reconciliation:', error);
+            fetchStats();
         } finally {
             setRunning(false);
         }
     };
+
+    // Polling effect
+    useEffect(() => {
+        let interval;
+        if (stats?.status === 'Processing') {
+            interval = setInterval(() => {
+                fetchStats();
+                fetchRecords();
+            }, 2000);
+        }
+        return () => clearInterval(interval);
+    }, [stats?.status]);
 
     const canEdit = user && ['Admin', 'Analyst'].includes(user.role);
 
