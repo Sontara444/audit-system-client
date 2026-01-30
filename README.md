@@ -36,3 +36,9 @@ This is the client-side application for the ReconAudit System, built with **Reac
 *   **Drag & Drop Upload**: Intuitive file upload interface with validation.
 *   **Interactive Tables**: Filterable and paginated data tables for reviewing reconciliation results.
 *   **Responsive Design**: Mobile-friendly layout with a collapsible sidebar and adaptative grids.
+
+## Roles & Permissions
+The interface adapts based on the logged-in user's role:
+*   **Admin**: Full access to all features, including system-wide audit logs and all uploads.
+*   **Analyst**: Operational access to upload files and trigger reconciliation jobs.
+*   **Viewer**: Read-only access to dashboards, reports, and audit timelines. Cannot modify data.
